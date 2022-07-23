@@ -17,14 +17,14 @@ def nll(y, rv_y):
     return -rv_y.log_prob(y)
 
 
-cce_obj = tf.keras.losses.CategoricalCrossentropy(
-    reduction=tf.keras.losses.Reduction.NONE
-)
-
-
-def cce(y_true, y_pred):
-    """Categorical cross-entropy loss."""
-    return cce_obj(tf.broadcast_to(y_true, y_pred.shape), y_pred)
+# cce_obj = tf.keras.losses.CategoricalCrossentropy(
+#     reduction=tf.keras.losses.Reduction.NONE
+# )
+#
+#
+# def cce(y_true, y_pred):
+#     """Categorical cross-entropy loss."""
+#     return cce_obj(tf.broadcast_to(y_true, y_pred.shape), y_pred)
 
 
 @ray.remote(num_cpus=1)
@@ -42,12 +42,13 @@ def model_predict(model_path, X, batch_size=32, verbose=0):
     Returns:
         array: The prediction based on the provided input data.
     """
-    import tensorflow as tf
-    import tensorflow_probability as tfp
+    # import tensorflow as tf
+    # import tensorflow_probability as tfp
+    import torch
 
     # GPU Configuration if available
-    set_memory_growth_for_visible_gpus(True)
-    tf.keras.backend.clear_session()
+    # set_memory_growth_for_visible_gpus(True)
+    # tf.keras.backend.clear_session()
     model_file = model_path.split("/")[-1]
 
     try:
