@@ -49,12 +49,13 @@ def model_predict(model_path, X, batch_size=32, verbose=0):
     # GPU Configuration if available
     # set_memory_growth_for_visible_gpus(True)
     # tf.keras.backend.clear_session()
+
     model_file = model_path.split("/")[-1]
 
     try:
         if verbose:
             print(f"Loading model {model_file}", end="\n", flush=True)
-        model = tf.keras.models.load_model(model_path, compile=False)
+        model = torch.jit.load(model_path)
     except:
         if verbose:
             print(f"Could not load model {model_file}", flush=True)
